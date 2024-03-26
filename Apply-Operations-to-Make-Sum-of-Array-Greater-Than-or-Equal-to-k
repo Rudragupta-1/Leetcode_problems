@@ -1,0 +1,8 @@
+class Solution {
+    public int minOperations(int k) {
+        int m=(int)Math.ceil(Math.sqrt(k/1.0));
+        return m-1+(k-1)/m;
+    }
+}
+
+//Medium level 
