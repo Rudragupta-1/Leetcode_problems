@@ -1,0 +1,38 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public TreeNode buildTree(int[] inorder, int[] postorder) {
+        return function(0,inorder.length-1,0,postorder.length-1,postorder,inorder);
+    }
+    private int ind=0;
+    private TreeNode function(int inStart,int inEnd,int postStart,int postEnd,int[] postorder,int[] inorder){
+        if(inStart>inEnd) return null;
+        TreeNode root=new TreeNode(postorder[postEnd]);
+        if(inStart==inEnd) return root;
+        int index=search(inorder,inStart,inEnd,root.val);
+        root.left=function(inStart,index-1,postStart,postStart-inStart+index-1,postorder,inorder);
+        root.right=function(index+1,inEnd,postEnd-inEnd+index,postEnd-1,postorder,inorder);
+        return root;
+    }
+    private int search(int[] inorder,int inStart,int inEnd,int x){
+        int i;
+        for(i=inStart;i<=inEnd;i++){
+            if(inorder[i]==x)
+            return i;
+        }
+        return i;
+    }
+}
