@@ -1,0 +1,32 @@
+class Solution {
+    public int maxProduct(String[] words) {
+        int max=Integer.MIN_VALUE;
+        for(int i=0;i<words.length-1;i++)
+        {
+            String word1=words[i];
+            for(int j=i+1;j<words.length;j++){
+                if(haveCommonLetters(word1,words[j])){
+                    int product=word1.length()*words[j].length();
+                    max=Math.max(max,product);
+                }
+            }
+        }
+     if(max==Integer.MIN_VALUE)
+     return 0;
+     else return max;
+    }
+    static boolean haveCommonLetters(String word1,String word2){
+        int mask1=bitMask(word1);
+        int mask2=bitMask(word2);
+
+        return (mask1&mask2)==0;
+    }
+    static int bitMask(String word){
+        int mask=0;
+        for(char c:word.toCharArray()){
+            int bitPosition=c-'a';
+            mask|=(1<<bitPosition);
+        }
+        return mask;
+    }
+}
