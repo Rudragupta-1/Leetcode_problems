@@ -1,0 +1,34 @@
+class RandomizedSet {
+    List<Integer> l;
+    public RandomizedSet() {
+        l=new ArrayList<>();  
+    }
+    
+    public boolean insert(int val) {
+        if(l.contains(val))
+        return false;
+        l.add(val);
+        return true;
+    }
+    
+    public boolean remove(int val) {
+        if(l.contains(val))
+        {
+            l.remove(Integer.valueOf(val));
+            return true;
+        }
+        return false;
+    }
+    
+    public int getRandom() {
+        return l.get((int)(Math.random()*l.size()));
+    }
+}
+
+/**
+ * Your Randomizedl object will be instantiated and called as such:
+ * Randomizedl obj = new Randomizedl();
+ * boolean param_1 = obj.insert(val);
+ * boolean param_2 = obj.remove(val);
+ * int param_3 = obj.getRandom();
+ */
