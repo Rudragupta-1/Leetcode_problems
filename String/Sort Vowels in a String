@@ -1,0 +1,34 @@
+class Solution {
+    public String sortVowels(String s) {
+        StringBuilder v=new StringBuilder();
+        StringBuilder c=new StringBuilder();
+        StringBuilder res=new StringBuilder();
+        for(int i=0;i<s.length();i++)
+        {
+            char ch=s.charAt(i);
+            if(isVowel(ch)){
+                v.append(ch);
+            }
+            else c.append(ch);
+        }
+        char arr[]=v.toString().toCharArray();
+        Arrays.sort(arr);
+        v=new StringBuilder(new String(arr));
+
+        int k=0,j=0;
+
+        for(int i=0;i<s.length();i++){
+            char ch=s.charAt(i);
+            if(isVowel(ch)){
+                res.append(v.charAt(k++));
+            }
+            else{
+                res.append(c.charAt(j++));
+            }
+        }
+        return res.toString();
+    }
+    static boolean isVowel(char ch){
+        return "aeiouAEIOU".indexOf(ch)!=-1;
+    }
+}
