@@ -1,0 +1,23 @@
+class LUPrefix {
+    HashSet<Integer> set;
+    int m=0;
+    public LUPrefix(int n) {
+        set=new HashSet<>();
+    }
+    
+    public void upload(int video) {
+        set.add(video);
+        while(set.contains(m+1)) m++;
+    }
+    
+    public int longest() {
+        return m;
+    }
+}
+
+/**
+ * Your LUPrefix object will be instantiated and called as such:
+ * LUPrefix obj = new LUPrefix(n);
+ * obj.upload(video);
+ * int param_2 = obj.longest();
+ */
