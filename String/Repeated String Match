@@ -1,0 +1,30 @@
+class Solution {
+    public int repeatedStringMatch(String a, String b) {
+
+        StringBuilder main=new StringBuilder(a);
+        int cnt=1;
+
+        while(main.length()<b.length()){
+            main.append(a);
+            cnt++;
+        }
+
+        if(isSubstring(main,b))
+        return cnt;
+        
+        main.append(a);
+        cnt++;
+
+        if(isSubstring(main,b))
+        return cnt;
+
+        return -1;
+    }
+    
+    public static boolean isSubstring(StringBuilder main, String sub){
+            if(main==null || sub==null){
+                return false;
+            }
+            return main.toString().contains(sub);
+        } 
+}
