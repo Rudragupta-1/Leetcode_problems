@@ -1,0 +1,21 @@
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+class Solution {
+    public String removeOccurrences(String s, String part) {
+    Pattern pattern=Pattern.compile(part);
+        while(true){
+            Matcher matcher=pattern.matcher(s);
+            if(matcher.find()){
+                int start=matcher.start();
+                int end=matcher.end();
+                String s1=s.substring(0,start);
+                String s2=s.substring(end);
+                s=new String(s1+s2);
+            }
+            else {
+                break;
+            }
+        }
+        return s;
+    }
+}
