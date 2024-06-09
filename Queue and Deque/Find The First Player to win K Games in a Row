@@ -1,0 +1,27 @@
+class Solution {
+    public int findWinningPlayer(int[] skills, int k) {
+        int n=skills.length;
+        Deque<Integer> dq=new LinkedList<>();
+        for(int i=1;i<skills.length;i++)
+        {
+            dq.addLast(i);
+        }
+        int cnt=0;
+        int win=0;
+        while(true){
+            int curr=dq.pollFirst();
+            if(skills[curr]<skills[win]){
+                cnt++;
+                dq.addLast(curr);
+            }
+            else{
+                cnt=1;
+                dq.addLast(win);
+            win=curr;
+            }if(cnt==k || cnt>=n-1){
+                return win;
+            }
+        }
+        // return 1;
+    }
+}
