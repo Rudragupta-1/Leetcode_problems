@@ -54,8 +54,8 @@ Recursion is a technique where a function calls itself in order to solve a probl
 1. Clone the repository:
 
     ```bash
-    git clone https://github.com/your-username/leetcode-problems.git
-    cd leetcode-problems
+    git clone https://github.com/your-username/Leetcode_problems.git
+    cd Leetcode_problems
     ```
 
 2. Navigate to the topic folder of interest to find the solutions.
