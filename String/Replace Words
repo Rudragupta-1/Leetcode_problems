@@ -1,0 +1,22 @@
+class Solution {
+    public String replaceWords(List<String> dictionary, String sentence) {
+        Collections.sort(dictionary);
+        String [] str=sentence.split(" ");
+        StringBuilder res=new StringBuilder();
+        for(String word:str){
+            boolean flag=false;
+            for(String root:dictionary){
+                if(word.startsWith(root)){
+                    res.append(root).append(" ");
+                flag=true;
+                break;
+                }
+            }
+            if(!flag){
+                res.append(word).append(" ");
+            }
+        }
+        return res.toString().trim();
+    }
+      
+}
