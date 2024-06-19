@@ -1,0 +1,30 @@
+
+class Solution {
+    public List<List<Integer>> findMatrix(int[] nums) {
+        HashSet<Integer> set = new HashSet<>();
+        List<List<Integer>> ll = new ArrayList<>();
+        
+        List<Integer> temp = new ArrayList<>();
+        for (int x : nums) {
+            temp.add(x);
+        }
+        
+        while (!temp.isEmpty()) {
+            List<Integer> l = new ArrayList<>();
+            Iterator<Integer> iterator = temp.iterator();
+            
+            while (iterator.hasNext()) {
+                int num = iterator.next();
+                if (!set.contains(num)) {
+                    l.add(num);
+                    set.add(num);
+                    iterator.remove();
+                }
+            }
+            
+            ll.add(l);
+            set.clear();  
+        }
+        
+        return ll;
+    }}
