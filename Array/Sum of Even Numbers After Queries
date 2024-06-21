@@ -1,0 +1,28 @@
+class Solution {
+    public int[] sumEvenAfterQueries(int[] nums, int[][] queries) {
+        int evenValue=0;
+        for(int x:nums){
+            if(x%2==0){
+                evenValue+=x;
+            }
+        }
+        int n=nums.length;
+        int []res=new int[n];
+        int k=0;
+        for(int[] q:queries){
+            int value=q[0];
+            int index=q[1];
+            int oldValue=nums[index];
+            int newValue=value+oldValue;
+            nums[index]=newValue;
+            if(oldValue%2==0){
+                evenValue-=oldValue;
+            }
+            if(newValue%2==0){
+                evenValue+=newValue;
+            }
+            res[k++]=evenValue;
+        }
+        return res;
+    }
+}
