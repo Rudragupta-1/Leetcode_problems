@@ -1,0 +1,19 @@
+class Solution {
+    public double minimumAverage(int[] nums) {
+        List<Double> avg=new ArrayList<>();
+        List<Integer> ll=new ArrayList<>();
+        for(int x:nums){
+            ll.add(x);
+        }
+        Collections.sort(ll);
+        int n=nums.length;
+        int i=n/2;
+        while(i-->0){
+            avg.add((ll.get(0)+ll.get(ll.size()-1))/2.0);
+            ll.remove(0);
+            ll.remove(ll.size()-1);
+        }
+        Collections.sort(avg);
+        return avg.get(0);
+    }
+}
