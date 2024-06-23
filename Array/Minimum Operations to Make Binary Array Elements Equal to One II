@@ -1,0 +1,19 @@
+class Solution {
+    public int minOperations(int[] nums) {
+        // This is flip flag algorithm
+        int res=0;
+        int n=nums.length;
+        int flag=1;
+        for(int x:nums){
+            if(x!=flag){
+                res++;
+                if(flag==1){
+                    flag=0;
+                }else{
+                    flag=1;
+                }
+            }
+        }
+        return res;
+    }
+}
