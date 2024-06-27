@@ -1,0 +1,13 @@
+class Solution {
+    public int[] getMaximumXor(int[] nums, int maximumBit) {
+        int max_xor=(int)Math.pow(2,maximumBit)-1;
+        int total_xor=0;
+        for(int i:nums) total_xor^=i;
+        int ans[]=new int[nums.length];
+        for(int i=0;i<nums.length;i++){
+            ans[i]=total_xor^max_xor;
+            total_xor^=nums[nums.length-1-i];
+        }
+        return ans;
+    }
+}
