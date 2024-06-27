@@ -1,0 +1,40 @@
+class Solution {
+    public int equalPairs(int[][] grid) {
+        StringBuilder sr = new StringBuilder();
+        StringBuilder sc = new StringBuilder();
+        int n = grid.length;
+        int m = grid[0].length;
+        
+        // Building row strings
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                sr.append(grid[i][j]).append(",");
+            }
+            sr.append(" ");
+        }
+        
+        // Building column strings
+        for (int j = 0; j < m; j++) {
+            for (int i = 0; i < n; i++) {
+                sc.append(grid[i][j]).append(",");
+            }
+            sc.append(" ");
+        }
+        
+        String[] s1 = sr.toString().split(" ");
+        String[] s2 = sc.toString().split(" ");
+        int x = s1.length;
+        int y = s2.length;
+        int count = 0;
+        
+        for (int i = 0; i < x; i++) {
+            for (int j = 0; j < y; j++) {
+                if (s1[i].equals(s2[j])) {
+                    count++;
+                }
+            }
+        }
+        
+        return count;
+    }
+}
