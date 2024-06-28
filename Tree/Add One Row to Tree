@@ -1,0 +1,59 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public TreeNode addOneRow(TreeNode root, int val, int depth) {
+        if(depth==1){
+            TreeNode x=new TreeNode(val);
+            x.left=root;
+            return x;
+        }
+        // simple BFS algorithm
+        Queue<TreeNode> q=new LinkedList<>();
+        q.offer(root);
+        int c=1;
+        while(!q.isEmpty()){
+            int l=q.size();
+            // row add krne ka
+            if(c==depth-1){
+                // ye naya row bana dega
+                for(int i=0;i<l;i++){
+                TreeNode node=q.poll();
+                TreeNode le=node.left;
+                TreeNode ri=node.right;
+                node.left=new TreeNode(val);
+                node.right=new TreeNode(val);
+                node.left.left=le;
+                node.right.right=ri;
+            }break;}
+            else{
+            for(int i=0;i<l;i++){
+                TreeNode x=q.poll();
+                if(x.right!=null){
+                    q.offer(x.right);
+                }
+                if(x.left!=null){
+                    q.offer(x.left);
+                }
+            }
+            }
+            // q me add krne ka 
+            
+            c++;
+        }
+        // return root krne ka
+        return root;
+    }
+}
