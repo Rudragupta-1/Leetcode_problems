@@ -1,0 +1,34 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public int maxAncestorDiff(TreeNode root) {
+        int min=root.val;
+        int max=root.val;
+        int res=0;
+        return function(min,max,res,root);
+    }
+    public int function(int min, int max, int res, TreeNode root){
+
+        min=Math.min(min,root.val);
+        max=Math.max(max,root.val);
+        res=Math.max(res,max-min);
+        if(root.left!=null)
+        res=function(min,max,res,root.left);
+        if(root.right!=null)
+        res=function(min,max,res,root.right);
+        return res;
+    }
+}
