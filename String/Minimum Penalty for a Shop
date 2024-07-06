@@ -1,0 +1,22 @@
+class Solution {
+    public int bestClosingTime(String customers) {
+        int totalPenalty=0;
+        for(int x=0;x<customers.length();x++){
+            if(customers.charAt(x)=='Y')
+            totalPenalty++;
+        }
+        int j=0;
+        int min=totalPenalty;
+        for(int i=0;i<customers.length();i++){
+            if(customers.charAt(i)=='Y'){
+                totalPenalty--;
+            }
+            else totalPenalty++;
+            if(min>totalPenalty){
+                min=totalPenalty;
+                j=i+1;
+            }
+        }
+        return j;
+    }
+}
