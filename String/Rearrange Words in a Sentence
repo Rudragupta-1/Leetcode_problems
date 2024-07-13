@@ -1,0 +1,14 @@
+class Solution {
+    public String arrangeWords(String text) {
+        String sarr[]=text.toLowerCase().split(" ");
+        Arrays.sort(sarr,(a,b)->(a.length()-b.length()));
+        StringBuilder sb=new StringBuilder();
+        String s=sarr[0];
+        String n=String.valueOf(s.charAt(0)).toUpperCase()+s.substring(1);
+        sb.append(n).append(" ");
+        for(int i=1;i<sarr.length;i++){
+            sb.append(sarr[i]).append(" ");
+        }
+        return sb.toString().trim();
+    }
+}
