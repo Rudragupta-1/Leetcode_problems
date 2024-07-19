@@ -1,0 +1,55 @@
+class Pair{
+    int node;
+    int price;
+    public Pair(int node, int price){
+        this.node=node;
+        this.price=price;
+    }
+}
+class Tuple{
+    int price;
+    int node;
+    int stops;
+    public Tuple(int price, int node, int stops){
+        this.price=price;
+        this.node=node;
+        this.stops=stops;
+    }
+}
+class Solution {
+    public int findCheapestPrice(int n, int[][] flights, int src, int dst, int k) {
+        ArrayList<ArrayList<Pair>> adj=new ArrayList<>();
+        Queue<Tuple> q=new LinkedList<>();
+        for(int i=0;i<n;i++){
+            adj.add(new ArrayList<>());
+        }
+        for(int i=0;i<flights.length;i++){
+            adj.get(flights[i][0]).add(new Pair(flights[i][1],flights[i][2]));
+        }
+        int dist[]=new int[n];
+        for(int i=0;i<n;i++){
+            dist[i]=Integer.MAX_VALUE;
+        }
+        dist[src]=0;
+        q.add(new Tuple(0,src,0));
+        while(!q.isEmpty()){
+            int price=q.peek().price;
+            int node=q.peek().node;
+            int stops=q.peek().stops;
+            q.remove();
+            if(stops>k) continue;
+            for(Pair it:adj.get(node)){
+                int adjNode=it.node;
+                int cost=it.price;
+                if(cost+price<dist[adjNode] && stops<=k){
+                    dist[adjNode]=cost+price;
+                    q.add(new Tuple(cost+price,adjNode,stops+1));
+                }
+            }
+        }
+        if(dist[dst]==Integer.MAX_VALUE){
+            return -1;
+        }
+        else return dist[dst];
+    }
+}
