@@ -1,0 +1,23 @@
+class Solution {
+    public String losingPlayer(int x, int y) {
+        // 1 is alice 
+        // 2 is bob
+        int p=0;
+        boolean flag=true;
+        while(x>0 && y>3){
+            if(flag){
+                p=1;
+            }
+            else p=2;
+            flag=!flag;
+            int sum=0;
+            sum+=115;
+            x--;
+            y-=4;
+        }
+        String res;
+        if(p==1) res="Alice";
+        else res="Bob";
+        return res;
+    }
+}
