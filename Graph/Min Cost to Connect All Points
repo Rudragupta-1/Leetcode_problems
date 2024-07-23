@@ -1,0 +1,43 @@
+class Pair{
+    int node;
+    int dist;
+    public Pair(int node , int dist){
+        this.node=node;
+        this.dist=dist;
+    }
+}
+class Solution {
+    public int minCostConnectPoints(int[][] points) {
+        int V=points.length;
+        ArrayList<ArrayList<Pair>> adj=new ArrayList<>();
+        for(int i=0;i<V;i++){
+            adj.add(new ArrayList<>());
+        }
+        for(int i=0;i<V;i++){
+            for(int j=0;j<V;j++){
+                adj.get(i).add(new Pair(j,Math.abs(points[i][0]-points[j][0])+Math.abs(points[i][1]-points[j][1])));
+            }
+        }
+        PriorityQueue<Pair> q=new PriorityQueue<>((x,y)->(x.dist-y.dist));
+        q.add(new Pair(0,0));
+        int vis[]=new int[V];
+        int sum=0;
+        while(!q.isEmpty()){
+            int node=q.peek().node;
+            int dist=q.peek().dist;
+            q.remove();
+            if(vis[node]==1) continue;
+            vis[node]=1;
+            
+            sum+=dist;
+            for(int i=0;i<adj.get(node).size();i++){
+                int adjNode=adj.get(node).get(i).node;
+                int wt=adj.get(node).get(i).dist;
+                if(vis[adjNode]==0){
+                    q.add(new Pair(adjNode,wt));
+                }
+            }
+        }
+        return sum;
+    }
+}
