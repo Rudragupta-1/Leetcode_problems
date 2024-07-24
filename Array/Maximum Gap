@@ -1,0 +1,14 @@
+class Solution {
+    public int maximumGap(int[] nums) {
+        if(nums.length<2) return 0;
+        PriorityQueue<Integer> pq = new PriorityQueue<>((x, y) -> x - y);
+        int diff=Integer.MIN_VALUE;
+        for(int x:nums) pq.add(x);
+        int f=pq.poll();
+        while(!pq.isEmpty()){
+            diff=Math.max(diff,Math.abs(f-pq.peek()));
+            f=pq.poll();
+        }
+        return diff;
+    }
+}
