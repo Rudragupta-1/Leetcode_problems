@@ -1,0 +1,27 @@
+class Solution {
+    public boolean isPrime(int i){
+        if(i<=1) return false;
+        if(i<=3) return true;
+        if(i%2==0 || i%3==0) return false;
+        int sqrt=(int)Math.sqrt(i);
+        for(int j=5;j<=sqrt;j+=6){
+            if(i%j==0 || i%(j+2)==0){
+                return false;
+            }
+        }
+        return true;
+    }
+    public int nonSpecialCount(int l, int r) {
+        int count=0;
+        int s=(int)Math.sqrt(l);
+        int e=(int)Math.sqrt(r);
+        for(int i=s;i<=e;i++){
+            if((i*i)>=l && (i*i)<=r){
+                if(isPrime(i)){
+                    count++;
+                }
+            }
+        }
+        return r-l+1-count;
+    }
+}
