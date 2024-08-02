@@ -1,0 +1,32 @@
+class Solution {
+    public List<Integer> twoOutOfThree(int[] nums1, int[] nums2, int[] nums3) {
+        Set<Integer> set=new HashSet<>();
+        List<Integer> l1=new ArrayList<>();
+        List<Integer> l2=new ArrayList<>();
+        List<Integer> l3=new ArrayList<>();
+        for(int x:nums1){
+            l1.add(x);
+            set.add(x);
+        }
+        for(int x:nums2){
+            l2.add(x);
+            set.add(x);
+        }
+        for(int x:nums3){
+            l3.add(x);
+            set.add(x);
+        }
+        List<Integer> l4=new ArrayList<>(set); int c=0;
+        List<Integer> res=new ArrayList<>();
+        for(Integer x:l4){
+            c=0;
+            if(l1.contains(x) && (l2.contains(x)|| l3.contains(x))) c++;
+            if(l2.contains(x) && (l1.contains(x)|| l3.contains(x))) c++;
+            if(l3.contains(x) && (l2.contains(x)|| l1.contains(x))) c++;
+            if(c>=2){
+                res.add(x);
+            }
+        }
+        return res;
+    }
+}
