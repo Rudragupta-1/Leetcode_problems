@@ -1,0 +1,31 @@
+class Solution {
+    public int minFlips(int[][] grid) {
+        int count1=0;
+        int count2=0;
+        int n=grid.length;
+        int m=grid[0].length;
+        for(int i=0;i<n;i++){
+            int st=0;
+            int end=m-1;
+            while(st<end){
+                if(grid[i][st]!=grid[i][end]){
+                    count1++;
+                }
+                st++;
+                end--;
+            }a
+        }
+        for(int j=0;j<m;j++){
+            int st=0;
+            int end=n-1;
+             while(st<end){
+                if(grid[st][j]!=grid[end][j]){
+                    count2++;
+                }
+                st++;
+                end--;
+            }
+        }
+        return Math.min(count1,count2);
+    }
+}
