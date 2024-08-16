@@ -1,0 +1,46 @@
+class Solution {
+    // for counting vertices
+    public int countVertices(int node , int[] visVer, List<List<Integer>> adj){
+        visVer[node]=1;
+        int k=0;
+        for(int it:adj.get(node)){
+            k++;
+            if(visVer[it]==0){
+            k+=countVertices(it,visVer,adj);}
+        }
+        return k;
+    }
+    int b=0;
+public void countEdges(int node , int[] visEdg, List<List<Integer>> adj){
+        visEdg[node]=1; b++;
+        for(int it:adj.get(node)){
+            if(visEdg[it]==0){
+            countEdges(it,visEdg,adj);}
+        }
+    }
+    public int countCompleteComponents(int n, int[][] edges) {
+        int visVer[]=new int[n];
+        int visEdg[]=new int[n];
+        int count=0;
+        List<List<Integer>> adj=new ArrayList<>();
+        for(int i=0;i<n;i++){
+            adj.add(new ArrayList<>());
+        }
+        for(int i=0;i<edges.length;i++){
+            adj.get(edges[i][0]).add(edges[i][1]);
+            adj.get(edges[i][1]).add(edges[i][0]);
+        }
+        int ans=0;
+        for(int i=0;i<n;i++){
+            if(visVer[i]==0){
+                int a=countVertices(i,visVer,adj)/2;
+                countEdges(i,visEdg,adj);
+                if(a==(b*(b-1)/2)){
+                    ans++;
+                }
+                b=0;
+            }
+        }
+        return ans;
+    }
+}
