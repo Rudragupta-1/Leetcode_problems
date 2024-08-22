@@ -1,0 +1,25 @@
+class Solution {
+    public int dfs(List<List<Integer>> adj, boolean[] vis, int node){
+        int minChange=0;
+        vis[node]=true;
+        for(int it:adj.get(node)){
+            if(!vis[Math.abs(it)]){
+                minChange+=dfs(adj,vis,Math.abs(it))+(it>0?1:0);
+            }
+        }
+            return minChange;
+    }
+    public int minReorder(int n, int[][] connections) {
+        List<List<Integer>> adj=new ArrayList<>();
+        boolean vis[]=new boolean[n];
+        for(int i=0;i<n;i++){
+            adj.add(new ArrayList<>());
+        }
+        for(int[] c:connections){
+            int a=c[0]; int b=c[1];
+            adj.get(a).add(b);
+            adj.get(b).add(-a);
+        }
+        return dfs(adj,vis,0);
+    }
+}
