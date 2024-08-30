@@ -1,0 +1,42 @@
+class Pair{
+    int node;
+    double weight;
+    public Pair(int node , double weight){
+        this.node=node;
+        this.weight=weight;
+    }
+}
+class Solution {
+    double ans=0;
+    public double maxProbability(int n, int[][] edges, double[] succProb, int start, int end) {
+        List<List<Pair>> adj=new ArrayList<>();
+        for(int i=0;i<n;i++){
+            adj.add(new ArrayList<>());
+        }
+        for(int i=0;i<edges.length;i++){
+            int u=edges[i][0];
+            int v=edges[i][1];
+            double w=succProb[i];
+            adj.get(u).add(new Pair(v,w));
+            adj.get(v).add(new Pair(u,w));
+        }
+        double dist[]=new double[n];
+        Arrays.fill(dist,0.0);
+        dist[start]=1;
+        Queue<Integer> q=new LinkedList<>();
+        q.add(start);
+        while(!q.isEmpty()){
+            int node=q.poll();
+            for(Pair pair:adj.get(node)){
+                int neighbor=pair.node;
+                double prob=pair.weight;
+                double newProb=dist[node]*prob;
+                if(newProb>dist[neighbor]){
+                    dist[neighbor]=newProb;
+                    q.add(neighbor);
+                }
+            }
+        }
+        return dist[end];
+    }
+}
