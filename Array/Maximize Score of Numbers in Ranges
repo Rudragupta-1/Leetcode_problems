@@ -1,0 +1,37 @@
+import java.util.Arrays;
+
+class Solution {
+    public int maxPossibleScore(int[] start, int d) {
+        long l = 0;
+        long r = (long) 1e12;
+        Arrays.sort(start);
+        int n = start.length;
+        int ans = 0; 
+
+        while (l <= r) {
+            long m = (l + r) / 2;  
+            int p = start[0];
+            boolean ok = true;  
+
+            for (int i = 1; i < n; i++) {
+                if ((p + m) >= start[i] && (p + m) <= start[i] + d) {
+                    p += m;
+                } else if ((p + m) < start[i]) {
+                    p = start[i];
+                } else {
+                    ok = false;  
+                    break;
+                }
+            }
+
+            if (ok) {
+                ans = (int) m; 
+                l = m + 1;
+            } else {
+                r = m - 1;
+            }
+        }
+
+        return ans;
+    }
+}
