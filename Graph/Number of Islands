@@ -1,48 +1,90 @@
-class Solution {
-    public void bfs(int i , int j , int[][] vis,char[][] grid){
-        vis[i][j]=1;
-        Queue<Pair> q=new LinkedList<Pair>();
-        q.add(new Pair(i,j));
-        int n=grid.length;
-        int m=grid[0].length;
-        while(!q.isEmpty()){
-            int row=q.peek().first;
-            int col=q.peek().second;
-            q.remove();
-            for(int k=0;k<4;k++){
-                int delRow[]={-1,0,1,0};
-                int delCol[]={0,-1,0,1};
-                    int nr=row+delRow[k];
-                    int nc=col+delCol[k];
-                    if(nr>=0 && nr<n && nc>=0 && nc<m && grid[nr][nc]=='1' && vis[nr][nc]==0){
-                        vis[nr][nc]=1;
-                        q.add(new Pair(nr,nc));
-                    }
-                
-            }
+class DisjointSet {
+    List<Integer> rank = new ArrayList<>();
+    List<Integer> parent = new ArrayList<>();
+    List<Integer> size = new ArrayList<>();
+    public DisjointSet(int n) {
+        for (int i = 0; i <= n; i++) {
+            rank.add(0);
+            parent.add(i);
+            size.add(1);
         }
     }
-    public int numIslands(char[][] grid) {
-        int c=0;
-        int n=grid.length;
-        int m=grid[0].length;
-        int vis[][]=new int[n][m];
-        for(int i=0;i<n;i++){
-            for(int j=0;j<m;j++){
-                if(grid[i][j]=='1' && vis[i][j]==0){
-                    bfs(i,j,vis,grid);
-                    c++;
+
+    public int findUPar(int node) {
+        if (node == parent.get(node)) {
+            return node;
+        }
+        int ulp = findUPar(parent.get(node));
+        parent.set(node, ulp);
+        return parent.get(node);
+    }
+
+    public void unionByRank(int u, int v) {
+        int ulp_u = findUPar(u);
+        int ulp_v = findUPar(v);
+        if (ulp_u == ulp_v) return;
+        if (rank.get(ulp_u) < rank.get(ulp_v)) {
+            parent.set(ulp_u, ulp_v);
+        } else if (rank.get(ulp_v) < rank.get(ulp_u)) {
+            parent.set(ulp_v, ulp_u);
+        } else {
+            parent.set(ulp_v, ulp_u);
+            int rankU = rank.get(ulp_u);
+            rank.set(ulp_u, rankU + 1);
+        }
+    }
+
+    public void unionBySize(int u, int v) {
+        int ulp_u = findUPar(u);
+        int ulp_v = findUPar(v);
+        if (ulp_u == ulp_v) return;
+        if (size.get(ulp_u) < size.get(ulp_v)) {
+            parent.set(ulp_u, ulp_v);
+            size.set(ulp_v, size.get(ulp_v) + size.get(ulp_u));
+        } else {
+            parent.set(ulp_v, ulp_u);
+            size.set(ulp_u, size.get(ulp_u) + size.get(ulp_v));
+        }
+    }
+}
+class Solution {
+    public boolean isValid(int r, int c , int n, int m){
+        if(r>=0 && c>=0 && r<n && c<m){
+            return true;
+        }
+        return false;
+    }
+    public List<Integer> numOfIslands(int rows, int cols, int[][] operators) {
+        //Your code here
+        List<Integer> ans=new ArrayList<>();
+        DisjointSet ds=new DisjointSet(rows*cols);
+        int[][] vis=new int[rows][cols];
+        int count=0;
+        for(int i=0;i<operators.length;i++){
+            int row=operators[i][0];
+            int col=operators[i][1];
+            if(vis[row][col]==1) {ans.add(count);continue;}
+            vis[row][col]=1;
+            count++;
+            int[] dr={-1,0,1,0};
+            int[] dc={0,1,0,-1};
+            for(int ii=0;ii<4;ii++){
+                int adjR=row+dr[ii];
+                int adjC=col+dc[ii];
+                if(isValid(adjR,adjC,rows,cols)){
+                    if(vis[adjR][adjC]==1){
+                        int nodeNo=row*cols+col;
+                        int adjNodeNo=adjR*cols+adjC;
+                        if(ds.findUPar(nodeNo)!=ds.findUPar(adjNodeNo)){
+                            count--;
+                            ds.unionBySize(nodeNo,adjNodeNo);
+                        }
+                    }
                 }
             }
+            ans.add(count);
         }
-        return c;
+        return ans;
     }
-    class Pair{
-        int first;
-        int second;
-        public Pair(int first , int second){
-            this.first=first;
-            this.second=second;
-        }
-    }
+    
 }
