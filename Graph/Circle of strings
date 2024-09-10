@@ -1,0 +1,41 @@
+// User function Template for Java
+
+class Solution {
+    public void dfs(int node, int[] vis, List<List<Integer>> adj){
+        vis[node]=1;
+        for(int it:adj.get(node)){
+            if(vis[it]!=1){
+                dfs(it,vis,adj);
+            }
+        }
+    }
+    public int isCircle(String arr[]) {
+        // code here
+        List<List<Integer>> adj=new ArrayList<>(26);
+        for(int i=0;i<26;i++){
+            adj.add(new ArrayList<Integer>());
+        }
+        int in[]=new int[26];
+        int out[]=new int[26];
+        for(String s:arr){
+            int u=s.charAt(0)-'a';
+            int v=s.charAt(s.length()-1)-'a';
+            adj.get(u).add(v);
+            in[u]++;
+            out[v]++;
+        }
+        for(int i=0;i<26;i++){
+            if(in[i]!=out[i]){
+                return 0;
+            }
+        }
+        int vis[]=new int[26];
+        dfs(arr[0].charAt(0)-'a',vis,adj);
+        for(int i=0;i<26;i++){
+            if(in[i]!=0 && vis[i]==0){
+                return 0;
+            }
+        }
+        return 1;
+    }
+}
