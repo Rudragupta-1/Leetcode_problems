@@ -1,0 +1,81 @@
+// DP approach
+
+// class Solution {
+//     public int rob(int[] nums) {
+//         if(nums.length==1) return nums[0];
+//         List<Integer> temp1=new ArrayList<>();
+//         List<Integer> temp2=new ArrayList<>();
+//         int[] dp=new int[nums.length-1];
+//         Arrays.fill(dp,-1);
+//         for(int i=0;i<nums.length;i++){
+//             if(i!=0) temp1.add(nums[i]);
+//             if(i!=nums.length-1) temp2.add(nums[i]);
+//         }
+//         int x=func(temp1.size()-1,temp1,dp);
+//          Arrays.fill(dp,-1);
+//          int y=func(temp2.size()-1,temp2,dp);
+//          return Math.max(x,y);
+//     }
+//     public int func(int index,List<Integer> arr,int[] dp){
+//         if(index==0) return arr.get(index);
+//         if(index<0) return 0;
+//         if(dp[index]!=-1) return dp[index];
+//         int take=arr.get(index)+func(index-2,arr,dp);
+//         int notTake=0+func(index-1,arr,dp);
+//         return dp[index]=Math.max(take,notTake);
+//     }
+// }
+
+// DP Tabulation approach
+
+// class Solution {
+//     public int rob(int[] nums) {
+//         if(nums.length==1) return nums[0];
+//         List<Integer> temp1=new ArrayList<>();
+//         List<Integer> temp2=new ArrayList<>();
+//         for(int i=0;i<nums.length;i++){
+//             if(i!=0) temp1.add(nums[i]);
+//             if(i!=nums.length-1) temp2.add(nums[i]);
+//         }
+//         return Math.max(func(temp1),func(temp2));
+//     }
+//     public int func(List<Integer> arr){
+//         if(arr.size()==1) return arr.get(0);
+//         int dp[]=new int[arr.size()];
+//         dp[0]=arr.get(0);
+//         for(int i=1;i<arr.size();i++){
+//         int take=arr.get(i);if(i>1) take+=dp[i-2];
+//         int notTake=0+dp[i-1];
+//         dp[i]=Math.max(take,notTake);
+//         }
+//         return dp[arr.size()-1];
+//     }
+// }
+
+// DP space optimised approach 
+
+class Solution {
+    public int rob(int[] nums) {
+        if(nums.length==1) return nums[0];
+        List<Integer> temp1=new ArrayList<>();
+        List<Integer> temp2=new ArrayList<>();
+        for(int i=0;i<nums.length;i++){
+            if(i!=0) temp1.add(nums[i]);
+            if(i!=nums.length-1) temp2.add(nums[i]);
+        }
+        return Math.max(func(temp1),func(temp2));
+    }
+    public int func(List<Integer> arr){
+        if(arr.size()==1) return arr.get(0);
+        int prev2=0;
+        int prev=arr.get(0);
+        for(int i=1;i<arr.size();i++){
+        int take=arr.get(i);if(i>1) take+=prev2;
+        int notTake=0+prev;
+        int curr=Math.max(take,notTake);
+        prev2=prev;
+        prev=curr;
+        }
+        return prev;
+    }
+}
