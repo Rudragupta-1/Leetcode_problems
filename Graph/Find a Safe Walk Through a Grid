@@ -1,45 +1,39 @@
-import java.util.*;
-
+class Tuple{
+    int row;
+    int col ;
+    int health;
+    public Tuple(int row , int col , int health){
+        this.row=row;
+        this.col=col;
+        this.health=health;
+    } 
+}
 class Solution {
     public boolean findSafeWalk(List<List<Integer>> grid, int health) {
-        int m = grid.size();
-        int n = grid.get(0).size();
-        
-        int[][] directions = { { -1, 0 }, { 1, 0 }, { 0, -1 }, { 0, 1 } };
-
-        Queue<int[]> queue = new LinkedList<>();
-        queue.offer(new int[] { 0, 0, health });
-
-        boolean[][][] visited = new boolean[m][n][health + 1];
-        visited[0][0][health] = true;
-
-        while (!queue.isEmpty()) {
-            int[] current = queue.poll();
-            int row = current[0];
-            int col = current[1];
-            int currentHealth = current[2];
-
-            currentHealth -= grid.get(row).get(col);
-
-            if (currentHealth <= 0) {
-                continue;
-            }
-
-            if (row == m - 1 && col == n - 1) {
-                return true;
-            }
-
-            for (int[] dir : directions) {
-                int newRow = row + dir[0];
-                int newCol = col + dir[1];
-
-                if (newRow >= 0 && newRow < m && newCol >= 0 && newCol < n && !visited[newRow][newCol][currentHealth]) {
-                    queue.offer(new int[] { newRow, newCol, currentHealth });
-                    visited[newRow][newCol][currentHealth] = true;
+        int[][] drc={{-1,0},{1,0},{0,-1},{0,1}};
+        int n=grid.size();
+        int m=grid.get(0).size();
+        Queue<Tuple> q=new LinkedList<>();
+        q.offer(new Tuple(0,0,health));
+        boolean vis[][][]=new boolean[n][m][health+1];
+        vis[0][0][health]=true;
+        while(!q.isEmpty()){
+            int row =q.peek().row;
+            int col =q.peek().col;
+            int currHealth =q.peek().health;
+            q.remove();
+            currHealth-=grid.get(row).get(col);
+            if(currHealth<=0) continue;
+            if(row==n-1 && col==m-1) return true;
+            for(int[] d:drc){
+                int nr=row+d[0];
+                int nc=col+d[1];
+                if(nr>=0 && nr<n && nc>=0 && nc<m && !vis[nr][nc][currHealth]){
+                    vis[nr][nc][currHealth]=true;
+                    q.offer(new Tuple(nr,nc,currHealth));
                 }
             }
         }
-
         return false;
     }
 }
