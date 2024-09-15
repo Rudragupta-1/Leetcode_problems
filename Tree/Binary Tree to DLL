@@ -1,0 +1,73 @@
+
+//User function Template for Java
+
+/* class Node
+class Node
+{
+	Node left, right;
+	int data;
+	
+	Node(int d)
+	{
+		data = d;
+		left = right = null;
+	}
+	
+}*/
+
+//This function should return head to the DLL
+
+// Approach - 1
+// class Solution
+// {
+//     void func(Node root, List<Node> l){
+//         if(root==null) return ;
+//         func(root.left,l);
+//         l.add(root);
+//         func(root.right,l);
+//     }
+//     //Function to convert binary tree to doubly linked list and return it.
+//     Node bToDLL(Node root)
+//     {
+// 	//  Your code here
+// 	 List<Node> l=new ArrayList<>();
+// 	 func(root,l);
+// 	 Node res=l.get(0);
+// 	 Node prev=res;
+// 	 for(int i=1;i<l.size();i++){
+// 	     Node curr=l.get(i);
+// 	     prev.right=curr;
+// 	     curr.left=prev;
+// 	     prev=curr;
+// 	 }
+// 	 return res;
+//     }
+// }
+
+// Approach - 2
+class Solution{
+    //Function to convert binary tree to doubly linked list and return it.
+    	Node head=null;
+	 Node prev=null;
+    void func(Node root){
+        if(root==null) return;
+        func(root.left);
+        if(prev==null){
+            head=root;
+        }
+        else{
+            root.left=prev;
+            prev.right=root;
+        }
+        prev=root;
+        func(root.right);
+    }
+    Node bToDLL(Node root)
+    {
+	//  Your code here
+	    head=null;
+	    prev=null;
+	    func(root);
+	    return head;
+    }
+}
