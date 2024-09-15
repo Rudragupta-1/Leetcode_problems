@@ -1,0 +1,29 @@
+class Solution {
+    // Function to sort an array of 0s, 1s, and 2s
+    public void sort012(ArrayList<Integer> a) {
+        // code here
+        
+         int low=0;
+         int n=a.size();
+         int mid=0;
+         int high=n-1;
+         while(mid<=high){
+             if(a.get(mid)==0){
+                 int temp=a.get(mid);
+                 a.set(mid,a.get(low));
+                 a.set(low,temp);
+                 low++;
+                 mid++;
+             }
+             else if(a.get(mid)==1){
+                 mid++;
+             }
+             else if(a.get(mid)==2){
+                 int temp=a.get(mid);
+                 a.set(mid,a.get(high));
+                 a.set(high,temp);
+                 high--;
+             }
+         }
+    }
+}
