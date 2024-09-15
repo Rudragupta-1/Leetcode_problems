@@ -1,0 +1,44 @@
+// This is the DP approach
+// class Solution {
+//     public long func(int[] a , int[] b, int i, int j, long[][] dp ){
+//         if(i<0) return 0;
+//         if(j<0) return (long)-1e9;
+//         if(dp[i][j]!=-1) return dp[i][j];
+//         long take=(long)a[i]*b[j]+func(a,b,i-1,j-1,dp);
+//         long notTake=0+func(a,b,i,j-1,dp);
+//         return dp[i][j]=Math.max(take,notTake);
+//     }
+//     public long maxScore(int[] a, int[] b) {
+//         long[][] dp=new long[a.length][b.length];
+//         for(long[] row:dp){
+//             Arrays.fill(row,-1);
+//         }
+//         return func(a,b,a.length-1,b.length-1,dp);
+//     }
+// }
+
+// This is the DP Tabulation approach
+// class Solution {
+//     public long maxScore(int[] a, int[] b) {
+//         int n=a.length;
+//         int m=b.length;
+//         long[][] dp=new long[n+1][m+1];
+//         for(int i=0;i<=n;i++){
+//             for(int j=0;j<=m;j++){
+//                 dp[i][j]=(long)-1e9;
+//             }
+//         }
+//         for(int j=0;j<=m;j++){
+//             dp[0][j]=0;
+//         }
+//         for(int i=1;i<=n;i++){
+//             for(int j=1;j<=m;j++){
+//                 long take=(long)a[i-1]*b[j-1]+dp[i-1][j-1];
+//                 long notTake=dp[i][j-1];
+//                 dp[i][j]=Math.max(take,notTake);
+//             }
+//         }
+//         return dp[n][m];
+//     }
+// }
+
