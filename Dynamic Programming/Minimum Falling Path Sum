@@ -1,0 +1,93 @@
+// This DP approach will give TLE
+// class Solution {
+//     public int func(int i, int j, int[][] matrix, int[][] dp) {
+//         if (j < 0 || j >= matrix[0].length)
+//             return Integer.MAX_VALUE;
+//         if (i == 0)
+//             return matrix[i][j];
+//         if (dp[i][j] != -1)
+//             return dp[i][j];
+//         int ld = func(i - 1, j, matrix, dp);
+//         int d = func(i - 1, j - 1, matrix, dp);
+//         int rd = func(i - 1, j + 1, matrix, dp);
+//         return dp[i][j] = matrix[i][j] + Math.min(d, Math.min(ld, rd));
+//     }
+
+//     public int minFallingPathSum(int[][] matrix) {
+//         int n = matrix.length;
+//         int m = matrix[0].length;
+//         int min = Integer.MAX_VALUE;
+//         int[][] dp = new int[n][m];
+//         for (int[] row : dp) {
+//             Arrays.fill(row, -1);
+//         }
+//         for (int j = 0; j < m; j++) {
+//             min = Math.min(min, func(n - 1, j, matrix, dp));
+//         }
+//         return min;
+//     }
+// }
+
+// DP Tabulation approach , this will work
+
+// class Solution {
+//     public int minFallingPathSum(int[][] matrix) {
+//         int n = matrix.length;
+//         int m = matrix[0].length;
+//         // int min = Integer.MAX_VALUE;
+//         int[][] dp = new int[n][m];
+//         for (int j = 0; j < m; j++) {
+//             dp[0][j] = matrix[0][j];
+//         }
+//         for (int i = 1; i < n; i++) {
+//             for (int j = 0; j < m; j++) {
+//                 int d = dp[i-1][j];
+//                 int ld=0;
+//                if(j-1>=0)  ld +=dp[i-1][j-1];
+//                else ld+=Integer.MAX_VALUE;
+//                int rd=0;
+//                 if(j+1<m)  rd +=dp[i-1][j+1];
+//                else rd+=Integer.MAX_VALUE;
+//                 dp[i][j] =  matrix[i][j]+Math.min(d, Math.min(ld, rd));
+//             }
+//         }
+//         int min=Integer.MAX_VALUE;
+//         for(int j=0;j<m;j++){
+//             min=Math.min(min,dp[n-1][j]);
+//         }
+//         return min;
+//     }
+// }
+
+// Now do the DP Space optimization
+class Solution {
+    public int minFallingPathSum(int[][] matrix) {
+        int n = matrix.length;
+        int m = matrix[0].length;
+        // int min = Integer.MAX_VALUE;
+        int[] prev = new int[m];
+        for (int j = 0; j < m; j++) {
+            prev[j] = matrix[0][j];
+        }
+
+        for (int i = 1; i < n; i++) {
+            int[] curr = new int[m];
+            for (int j = 0; j < m; j++) {
+                int d = prev[j];
+                int ld=0;
+               if(j-1>=0)  ld +=prev[j-1];
+               else ld+=Integer.MAX_VALUE;
+               int rd=0;
+                if(j+1<m)  rd +=prev[j+1];
+               else rd+=Integer.MAX_VALUE;
+                curr[j] =  matrix[i][j]+Math.min(d, Math.min(ld, rd));
+            }
+            prev=curr;
+        }
+        int min=Integer.MAX_VALUE;
+        for(int j=0;j<m;j++){
+            min=Math.min(min,prev[j]);
+        }
+        return min;
+    }
+}
