@@ -1,0 +1,33 @@
+import java.util.* ;
+import java.io.*; 
+public class Solution {
+	static int mod=1000000007;
+	public static int func(int index, int target, int[] arr, int[][] dp){
+		if(index==0){
+			if(arr[index]==0 &&  target==0 ) return 2;
+			if(arr[index]==target ||  target==0) return 1;
+			else return 0;
+		}
+		if(dp[index][target]!=-1) return dp[index][target];
+		int notPick=func(index-1,target,arr,dp)%mod;
+		int pick=0;
+		if(arr[index]<=target){
+			pick=func(index-1, target-arr[index],arr,dp)%mod;
+		}
+		return dp[index][target]=(pick+notPick)%mod;
+	}
+	public static int countPartitions(int n, int d, int[] arr) {
+		// Write your code here.
+		int tot=0;
+		for(int x:arr) tot+=x;
+		if(tot-d<0 || (tot-d)%2!=0){
+			return 0;
+		}
+		int target=(tot-d)/2;
+		int[][] dp=new int[n][target+1];
+		for(int[] row:dp){
+			Arrays.fill(row,-1);
+		}
+		return func(n-1,target,arr,dp)%mod;
+	}
+}
