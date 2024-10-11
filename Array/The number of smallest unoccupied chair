@@ -1,0 +1,32 @@
+class Solution {
+    public int smallestChair(int[][] times, int targetFriend) {
+        int n=times.length;
+        List<int[]> l=new ArrayList<>();
+        for(int i=0;i<n;i++){
+            l.add(new int[]{times[i][0], i, 1});
+            l.add(new int[]{times[i][1], i, 0});
+        }
+        Collections.sort(l,(a,b)->(a[0]==b[0])?Integer.compare(a[2],b[2]):Integer.compare(a[0],b[0]));
+        int[] friendChairs=new int[n];
+        PriorityQueue<Integer> pq=new PriorityQueue<>();
+        for(int i=0;i<n;i++){
+            pq.offer(i);
+        }
+        for(int[] event:l){
+            int arrival=event[0];
+            int friend=event[1];
+            int happening=event[2];
+            if(happening==1){
+                int chair=pq.poll();
+                friendChairs[friend]=chair;
+                if(friend==targetFriend){
+                    return chair;
+                }
+            }
+            else{
+                pq.offer(friendChairs[friend]);
+            }
+        }
+        return -1;
+    }
+}
