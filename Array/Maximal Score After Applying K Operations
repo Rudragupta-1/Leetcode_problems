@@ -1,0 +1,16 @@
+class Solution {
+    public long maxKelements(int[] nums, int k) {
+        PriorityQueue<Double> pq=new PriorityQueue<>(Collections.reverseOrder());
+        for(int x:nums){
+            pq.offer((double)x);
+        }
+        long ans=0;
+        while(k-->0){
+            double x=pq.peek();
+            pq.remove();
+            ans+=(long)x;
+            pq.offer(Math.ceil(x/3));
+        }
+        return ans;
+    }
+}
