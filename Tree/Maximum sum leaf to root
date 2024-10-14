@@ -1,0 +1,32 @@
+
+class Solution
+{
+    public static void func(List<Integer> l, Node root, int sum){
+        if(root==null) return;
+        sum+=root.data;
+        if(root.left==null && root.right==null){
+            l.add(sum);
+            return;
+        }
+        func(l,root.left,sum);
+        func(l,root.right,sum);
+    }
+    public static int maxPathSum(Node root)
+    {
+        //code here
+        List<Integer> l=new ArrayList<>();
+        // if(root.left==null && root.right==null) return root.data;
+        // else if(root.left==null && root.right!=null)
+        // func(l,root.right,root.data);
+        // else if(root.left!=null && root.right==null)
+        // func(l,root.left,root.data);
+        // else{
+            func(l,root,0);
+        // }
+        int max=Integer.MIN_VALUE;
+        for(int i=0;i<l.size();i++){
+            max=Math.max(max,l.get(i));
+        }
+        return max;
+    }
+}
