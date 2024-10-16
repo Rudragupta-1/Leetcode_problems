@@ -1,0 +1,17 @@
+class Solution {
+    public boolean checkSorted(List<Integer> arr) {
+        // code here
+        int swaps=0; int i=0;
+        while(i<arr.size()){
+            if(arr.get(i)-1!=i){
+                Collections.swap(arr,i,arr.get(i)-1);
+                swaps++;
+            }
+            else i++;
+            
+        if(swaps>2) return false;
+        }
+            if(swaps==1) return false;
+            return true;
+    }
+}
