@@ -1,0 +1,62 @@
+// import java.util.*;
+// public class Solution {
+// 	public static int func(int[][] dp , int ind, int N, int[] price){
+// 		if(ind==0){
+// 			return N*price[0];
+// 		}
+// 		if(dp[ind][N]!=-1) return dp[ind][N];
+// 		int notTake=0+func(dp,ind-1,N,price);
+// 		int take=Integer.MIN_VALUE;
+// 		if((ind+1)<=N){
+// 			take=price[ind]+func(dp,ind,N-(ind+1),price);
+// 		}
+// 		return dp[ind][N]=Math.max(take,notTake);
+// 	}
+// 	public static int cutRod(int price[], int n) {
+// 		// Write your code here.
+// 		int[][] dp=new int[n][n+1];
+// 		for(int[] row:dp){
+// 			Arrays.fill(row,-1);
+// 		}
+// 		return func(dp,n-1,n,price);
+// 	}
+// }
+
+import java.util.*;
+
+public class Solution {
+	// public static int func(int[][] dp , int ind, int N, int[] price){
+	// if(ind==0){
+	// return N*price[0];
+	// }
+	// if(dp[ind][N]!=-1) return dp[ind][N];
+	// int notTake=0+func(dp,ind-1,N,price);
+	// int take=Integer.MIN_VALUE;
+	// if((ind+1)<=N){
+	// take=price[ind]+func(dp,ind,N-(ind+1),price);
+	// }
+	// return dp[ind][N]=Math.max(take,notTake);
+	// }
+	public static int cutRod(int price[], int n) {
+		// Write your code here.
+		// int N=n;
+		// int[][] dp = new int[n][n + 1];
+		int[] prev=new int[n+1];
+		for (int i = 0; i <= n; i++) {
+			prev[i] = i * price[0];
+		}
+		for (int ind = 1; ind < n; ind++) {
+			int[] curr=new int[n+1];
+			for (int N = 0; N <= n; N++) {
+				int notTake = 0 + prev[N];
+				int take = Integer.MIN_VALUE;
+				if ((ind + 1) <= N) {
+					take = price[ind] + curr[N - (ind + 1)];
+				}
+				curr[N] = Math.max(take, notTake);
+			}
+			prev=curr;
+		}
+		return prev[n];
+	}
+}
